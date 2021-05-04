@@ -1,24 +1,42 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 export function Home() {
+	let parrafo = useRef();
+
+	useEffect(() => {
+		console.log(parrafo);
+		parrafo.current.innerText =
+			"Este contenido fue cambiado mediante el useRef";
+	}, []);
+
+	let video = useRef();
+
+	const cambiarSrcVideo = () => {
+		video.current.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+	};
+
+	const controlVideo = () => {
+		if (video.current.paused) {
+			video.current.play();
+		} else if (!video.current.paused) {
+			video.current.pause();
+		}
+	};
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div>
+			<p ref={parrafo}>Mi contenido</p>
+			<audio
+				src="https://assets.breatheco.de/apis/sound/files/mario/songs/castle.mp3"
+				controls
+			/>
+			<video
+				ref={video}
+				src="https://www.w3schools.com/html/movie.mp4"
+				controls
+			/>
+			<button onClick={cambiarSrcVideo}>Cambiar src de video</button>
+			<button onClick={controlVideo}>Play/pause video</button>
 		</div>
 	);
 }
